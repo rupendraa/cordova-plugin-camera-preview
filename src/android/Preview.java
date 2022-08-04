@@ -60,7 +60,8 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback {
       Camera.Parameters params = mCamera.getParameters();
       if (mFocusModes.contains("continuous-picture")) {
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-      } else if (mFocusModes.contains("continuous-video")){
+      } else if (
+        .contains("continuous-video")){
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
       } else if (mFocusModes.contains("auto")){
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
@@ -271,6 +272,15 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback {
     }
 
     // Cannot find the one match the aspect ratio, ignore the requirement
+    //start added by rupendra
+    optimalSize = sizes.get(0);
+    for(int i=0;i<sizes.size();i++)
+    {
+     if(sizes.get(i).width > optimalSize.width)
+        optimalSize = sizes.get(i);
+    }
+    //end added by rupendra
+    
     if (optimalSize == null) {
       minDiff = Double.MAX_VALUE;
       for (Camera.Size size : sizes) {
